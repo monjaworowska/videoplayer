@@ -1,0 +1,95 @@
+.videoPlayer{
+	width: 100%;
+	font-size: 2rem;
+}
+
+video{
+	width: 100%;
+}
+
+.controls{
+	display: -ms-grid;
+	display: grid;
+	-ms-grid-columns: 10% 40% 20% 30%;
+	grid-template-columns: 10% 40% 20% 30%;
+}
+
+/*	Play control styles */
+
+	.playControl{
+	}
+
+/*	Progress bar styles */
+
+	.progressBar{
+		position: relative;
+		height: 50px;
+	}
+	.playBar{
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: #4d4d4d;
+		width: 30%;
+		height: 50px;
+		z-index: 2;
+	}
+	.loadedBar{
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: #e6e6e6;
+		width: 100%;
+		height: 50px;
+		z-index: 1;
+	}
+
+/*	Time status styles */
+
+	.timeStatus{
+		place-self: center;
+	}
+
+/*	Volume control styles */
+
+	.volumeControl{
+		display: -ms-grid;
+		display: grid;
+		-ms-grid-columns: 20% 80%;
+		grid-template-columns: 20% 80%;
+	}
+	.volumeStatus{
+		height: 50px;
+	}
+	.fullVolume{
+		background-color: #e6e6e6;
+		height: 50px;
+	}
+	.currentVolume{
+		background-color: #4d4d4d;
+		width: 15%;
+		height: 50px;
+	}
+
+
+.showPlay{
+	background-image: url(playIcon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.showPause{
+	background-image: url(pauseIcon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.showVolumeIcon{
+	background-image: url(volumeIcon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.showMuteIcon{
+	background-image: url(volumeMuteIcon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
