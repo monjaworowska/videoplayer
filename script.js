@@ -9,6 +9,10 @@
 		this.playBar = videoContainer.querySelector(".playBar");
 		this.loadedBar = videoContainer.querySelector(".loadedBar");
 
+		this.volumeStatus = videoContainer.querySelector(".volumeStatus");
+		this.fullVolume = videoContainer.querySelector(".fullVolume");
+		this.currentVolume = videoContainer.querySelector(".currentVolume");
+
 		this.assignEventListeners();
 
 	}
@@ -21,6 +25,10 @@
 		this.video.onprogress = this.updateLoadedBar.bind(this);
 		this.video.addEventListener("timeupdate", this.updatePlayBar.bind(this), false);
 		this.progressBar.onclick = this.rewind.bind(this);
+
+		this.fullVolume.onclick = this.adjustVolume.bind(this);
+		this.video.onvolumechange = this.setVolume.bind(this);
+		this.volumeStatus.onclick = this.mute.bind(this);
 
 	};
 
@@ -63,7 +71,35 @@
 		this.video.currentTime = currentTime;
 	};
 
+	/* AdjustVolume, setVolume, mute */
 
+	Player.prototype.adjustVolume = function(e){
+		var barEdge = this.fullVolume.getBoundingClientRect().left,
+			clickedX = e.pageX,
+			barClickedX = clickedX - barEdge,
+			currentVolume = (barClickedX / this.fullVolume.offsetWidth);
+		this.video.volume = currentVolume;
+		if(this.video.volume != 0){
+			this.volumeStatus.classList.remove("showMuteIcon");
+			this.volumeStatus.classList.add("showVolumeIcon");
+		}
+	}
+
+	Player.prototype.setVolume = function(){
+		this.currentVolume.style.width = (this.video.volume * 100) + "%";
+	}
+
+	Player.prototype.mute = function(e){
+		if(this.video.volume == 0){
+			this.video.volume = 1;
+			e.target.classList.remove("showMuteIcon");
+			e.target.classList.add("showVolumeIcon");
+		}else{
+			this.video.volume = 0;
+			e.target.classList.add("showMuteIcon");
+			e.target.classList.remove("showVolumeIcon");
+		}
+	}
 
 	new Player(document.querySelector("#videoPlayer1"));
 
