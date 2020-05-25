@@ -13,6 +13,9 @@
 		this.fullVolume = videoContainer.querySelector(".fullVolume");
 		this.currentVolume = videoContainer.querySelector(".currentVolume");
 
+		this.currentTime = videoContainer.querySelector(".currentTime");
+		this.totalTime = videoContainer.querySelector(".totalTime");
+
 		this.assignEventListeners();
 
 	}
@@ -30,6 +33,8 @@
 		this.video.onvolumechange = this.setVolume.bind(this);
 		this.volumeStatus.onclick = this.mute.bind(this);
 
+		this.video.ondurationchange = this.setDuration.bind(this);
+		this.video.addEventListener("timeupdate", this.updateCurrentTime.bind(this), false);
 	};
 
 	/* Play, reset */
@@ -91,7 +96,7 @@
 
 	Player.prototype.mute = function(e){
 		if(this.video.volume == 0){
-			this.video.volume = 1;
+			this.video.volume = 0.5;
 			e.target.classList.remove("showMuteIcon");
 			e.target.classList.add("showVolumeIcon");
 		}else{
@@ -99,6 +104,29 @@
 			e.target.classList.add("showMuteIcon");
 			e.target.classList.remove("showVolumeIcon");
 		}
+	}
+
+	/* FormatTime, updateCurrentTime, setDuration */
+
+	Player.prototype.formatTime = function(durations){
+		var durations = Math.round(durations),
+			minutes = Math.floor(durations / 60),
+			seconds = durations - minutes * 60;
+
+		if(seconds == 0)
+			seconds = "00";
+		else if(seconds < 10)
+			seconds = "0" + seconds;
+
+		return minutes + ":" + seconds;
+	}
+
+	Player.prototype.updateCurrentTime = function(){
+		this.currentTime.innerHTML = this.formatTime(this.video.currentTime);
+	}
+
+	Player.prototype.setDuration = function(){
+		this.totalTime.innerHTML = this.formatTime(this.video.duration);
 	}
 
 	new Player(document.querySelector("#videoPlayer1"));
